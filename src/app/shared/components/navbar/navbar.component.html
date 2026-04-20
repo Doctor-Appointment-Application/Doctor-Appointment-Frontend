@@ -1,1 +1,30 @@
-<p>navbar works!</p>
+<nav class="navbar">
+  <div class="navbar-brand">
+    <span class="brand-icon">🏥</span>
+    <span class="brand-name">DocAppoint</span>
+  </div>
+  <div class="navbar-links" *ngIf="auth.isLoggedIn()">
+    <ng-container [ngSwitch]="auth.getRole()">
+      <ng-container *ngSwitchCase="'Patient'">
+        <a routerLink="/patient/browse" routerLinkActive="active">Find Doctors</a>
+        <a routerLink="/patient/book" routerLinkActive="active">Book</a>
+        <a routerLink="/patient/appointments" routerLinkActive="active">My Appointments</a>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Doctor'">
+        <a routerLink="/doctor" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/doctor/appointments" routerLinkActive="active">Appointments</a>
+        <a routerLink="/doctor/schedule" routerLinkActive="active">Schedule</a>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Admin'">
+        <a routerLink="/admin" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/admin/manage-doctors" routerLinkActive="active">Doctors</a>
+        <a routerLink="/admin/analytics" routerLinkActive="active">Analytics</a>
+      </ng-container>
+    </ng-container>
+    <button class="btn-logout" (click)="logout()">Logout</button>
+  </div>
+  <div class="navbar-links" *ngIf="!auth.isLoggedIn()">
+    <a routerLink="/auth/login">Login</a>
+    <a routerLink="/auth/register">Register</a>
+  </div>
+</nav>

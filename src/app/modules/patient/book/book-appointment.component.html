@@ -1,0 +1,61 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Book Appointment</h1>
+  </div>
+  <div class="booking-card">
+    <div class="step" *ngIf="!selectedDoctor">
+      <h3>Step 1: Select Mode & Specialty</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Mode</label>
+          <select [(ngModel)]="selectedMode" (change)="onModeOrSpecialtyChange()" class="form-select">
+            <option value="">Select Mode</option>
+            <option value="Online">Online (Teleconsultation)</option>
+            <option value="Offline">Offline (In-Clinic)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Specialty</label>
+          <select [(ngModel)]="selectedSpecialty" (change)="onModeOrSpecialtyChange()" class="form-select">
+            <option [value]="0">Select Specialty</option>
+            <option *ngFor="let s of specialties" [value]="s.id">{{ s.name }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="doctors-list" *ngIf="doctors.length > 0">
+        <h3>Step 2: Choose a Doctor</h3>
+        <div class="doctor-item" *ngFor="let d of doctors" (click)="onDoctorSelect(d.id)">
+          <span class="doc-name">Dr. {{ d.fullName }}</span>
+          <span class="doc-fee">₹{{ d.consultationFee }}</span>
+          <span class="doc-slots">{{ d.availableSlots?.length }} slots</span>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="step" *ngIf="selectedDoctor && slots.length > 0">
+      <h3>Step 3: Choose a Time Slot</h3>
+      <div class="slots-grid">
+        <div class="slot-item" *ngFor="let slot of slots"
+             [class.selected]="selectedSlot === slot.id"
+             (click)="selectedSlot = slot.id">
+          <div class="slot-time">{{ slot.startTime | date:'HH:mm' }}</div>
+          <div class="slot-date">{{ slot.startTime | date:'MMM d, y' }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notes (optional)</label>
+        <textarea [(ngModel)]="notes" class="form-textarea" rows="3"
+                  placeholder="Any symptoms or notes..."></textarea>
+      </div>
+      <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+      <button class="btn-primary" (click)="confirmBooking()" [disabled]="!selectedSlot || loading">
+        {{ loading ? 'Booking...' : 'Confirm Appointment' }}
+      </button>
+    </div>
+ 
+    <div class="success-box" *ngIf="success">
+      <h3>✅ Appointment Booked!</h3>
+      <p>A confirmation email has been sent. <a routerLink="/patient/appointments">View My Appointments</a></p>
+    </div>
+  </div>
+</div>
