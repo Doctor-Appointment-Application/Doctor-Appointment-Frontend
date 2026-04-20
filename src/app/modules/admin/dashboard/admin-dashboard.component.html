@@ -1,0 +1,72 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Admin Dashboard</h1>
+    <p>System overview for today</p>
+  </div>
+ 
+  <div class="loading" *ngIf="loading">Loading dashboard...</div>
+ 
+  <div *ngIf="!loading && stats">
+    <div class="stats-grid">
+      <div class="stat-card blue">
+        <div class="stat-icon">👨‍⚕️</div>
+        <div class="stat-value">{{ stats.totalDoctors }}</div>
+        <div class="stat-label">Active Doctors</div>
+      </div>
+      <div class="stat-card teal">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value">{{ stats.totalPatients }}</div>
+        <div class="stat-label">Registered Patients</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-icon">📅</div>
+        <div class="stat-value">{{ stats.todayAppointments }}</div>
+        <div class="stat-label">Today's Appointments</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value">₹{{ stats.todayRevenue | number }}</div>
+        <div class="stat-label">Today's Revenue</div>
+      </div>
+    </div>
+ 
+    <div class="mode-breakdown">
+      <div class="breakdown-card">
+        <h3>Appointment Breakdown</h3>
+        <div class="mode-bar">
+          <div class="mode-label">Online</div>
+          <div class="bar-track">
+            <div class="bar-fill online"
+                 [style.width.%]="(stats.onlineAppointments / stats.todayAppointments) * 100 || 0">
+            </div>
+          </div>
+          <div class="mode-count">{{ stats.onlineAppointments }}</div>
+        </div>
+        <div class="mode-bar">
+          <div class="mode-label">Offline</div>
+          <div class="bar-track">
+            <div class="bar-fill offline"
+                 [style.width.%]="(stats.offlineAppointments / stats.todayAppointments) * 100 || 0">
+            </div>
+          </div>
+          <div class="mode-count">{{ stats.offlineAppointments }}</div>
+        </div>
+      </div>
+ 
+      <div class="specialty-breakdown" *ngIf="stats.specialtyBreakdown?.length > 0">
+        <h3>By Specialty</h3>
+        <div class="specialty-row" *ngFor="let s of stats.specialtyBreakdown">
+          <span class="spec-name">{{ s.specialty }}</span>
+          <span class="spec-count">{{ s.count }} appts</span>
+          <span class="spec-rev">₹{{ s.revenue }}</span>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="actions">
+      <button class="btn-reminder" (click)="triggerReminders()">📧 Send Reminders</button>
+      <a routerLink="manage-doctors" class="btn-nav">Manage Doctors</a>
+      <a routerLink="analytics" class="btn-nav">View Analytics</a>
+    </div>
+  </div>
+</div>
