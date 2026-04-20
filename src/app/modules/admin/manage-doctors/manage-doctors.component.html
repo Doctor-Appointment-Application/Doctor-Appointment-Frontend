@@ -1,1 +1,72 @@
-<p>manage-doctors works!</p>
+<div class="page-container">
+  <div class="page-header">
+    <h1>Manage Doctors</h1>
+    <button class="btn-add" (click)="showForm = !showForm">
+      {{ showForm ? 'Cancel' : '+ Add Doctor' }}
+    </button>
+  </div>
+ 
+  <div class="add-form" *ngIf="showForm">
+    <h3>Add New Doctor</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" [(ngModel)]="newDoctor.fullName" class="form-input" />
+      </div>
+      <div class="form-group">
+        <label>Mode</label>
+        <select [(ngModel)]="newDoctor.mode" class="form-input">
+          <option value="Online">Online</option>
+          <option value="Offline">Offline</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Specialty</label>
+        <select [(ngModel)]="newDoctor.specialtyId" class="form-input">
+          <option [value]="0">Select Specialty</option>
+          <option *ngFor="let s of specialties" [value]="s.id">{{ s.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Qualification</label>
+        <input type="text" [(ngModel)]="newDoctor.qualification" class="form-input" />
+      </div>
+      <div class="form-group">
+        <label>Experience (years)</label>
+        <input type="number" [(ngModel)]="newDoctor.experienceYears" class="form-input" />
+      </div>
+      <div class="form-group">
+        <label>Consultation Fee (₹)</label>
+        <input type="number" [(ngModel)]="newDoctor.consultationFee" class="form-input" />
+      </div>
+    </div>
+    <button class="btn-save" (click)="createDoctor()" [disabled]="loading">
+      {{ loading ? 'Saving...' : 'Save Doctor' }}
+    </button>
+  </div>
+ 
+  <div class="doctors-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th><th>Specialty</th><th>Mode</th>
+          <th>Experience</th><th>Fee</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of doctors">
+          <td>Dr. {{ d.fullName }}</td>
+          <td>{{ d.specialtyName }}</td>
+          <td>
+            <span class="badge" [class.online]="d.mode === 'Online'" [class.offline]="d.mode === 'Offline'">
+              {{ d.mode }}
+            </span>
+          </td>
+          <td>{{ d.experienceYears }} yrs</td>
+          <td>₹{{ d.consultationFee }}</td>
+          <td><button class="btn-del" (click)="deleteDoctor(d.id)">Deactivate</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

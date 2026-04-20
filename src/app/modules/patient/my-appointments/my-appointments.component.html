@@ -1,1 +1,41 @@
-<p>my-appointments works!</p>
+<div class="page-container">
+  <div class="page-header">
+    <h1>My Appointments</h1>
+    <p>View and manage your appointments</p>
+  </div>
+ 
+  <div class="loading" *ngIf="loading">Loading appointments...</div>
+ 
+  <div class="appointments-list" *ngIf="!loading">
+    <div class="appt-card" *ngFor="let a of appointments">
+      <div class="appt-header">
+        <div class="appt-mode" [class.online]="a.mode === 'Online'" [class.offline]="a.mode === 'Offline'">
+          {{ a.mode }}
+        </div>
+        <div class="appt-status" [class]="'status-' + a.status.toLowerCase()">
+          {{ a.status }}
+        </div>
+      </div>
+      <div class="appt-body">
+        <h3>Dr. {{ a.doctorName }}</h3>
+        <p class="specialty">{{ a.specialtyName }}</p>
+        <div class="appt-time">
+          <span>📅 {{ a.startTime | date:'MMM d, y' }}</span>
+          <span>🕐 {{ a.startTime | date:'HH:mm' }} – {{ a.endTime | date:'HH:mm' }}</span>
+        </div>
+        <div class="artifact" *ngIf="a.artifact">
+          <strong *ngIf="a.mode === 'Online'">🔗 Join Link:</strong>
+          <strong *ngIf="a.mode === 'Offline'">📍 Location:</strong>
+          <span>{{ a.artifact }}</span>
+        </div>
+      </div>
+      <div class="appt-actions" *ngIf="a.status === 'Confirmed'">
+        <button class="btn-cancel" (click)="cancelAppointment(a.id)">Cancel</button>
+      </div>
+    </div>
+ 
+    <div class="empty-state" *ngIf="appointments.length === 0">
+      <p>No appointments found. <a routerLink="/patient/browse">Book your first appointment</a></p>
+    </div>
+  </div>
+</div>

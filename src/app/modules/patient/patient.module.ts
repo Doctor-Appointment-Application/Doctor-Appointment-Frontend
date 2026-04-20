@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { PatientRoutingModule } from './patient-routing.module';
-import { BrowseComponent } from './browse/browse.component';
-import { BookComponent } from './book/book.component';
+import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowseDoctorsComponent } from './browse/browse-doctors.component';
+import { BookAppointmentComponent } from './book/book-appointment.component';
 import { MyAppointmentsComponent } from './my-appointments/my-appointments.component';
 
-
+ 
+const routes: Routes = [
+  { path: '', redirectTo: 'browse', pathMatch: 'full' },
+  { path: 'browse', component: BrowseDoctorsComponent },
+  { path: 'book', component: BookAppointmentComponent },
+  { path: 'appointments', component: MyAppointmentsComponent }
+];
+ 
 @NgModule({
-  declarations: [
-    BrowseComponent,
-    BookComponent,
-    MyAppointmentsComponent
-  ],
-  imports: [
-    CommonModule,
-    PatientRoutingModule
-  ]
+  declarations: [BrowseDoctorsComponent, BookAppointmentComponent, MyAppointmentsComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(routes)]
 })
-export class PatientModule { }
+export class PatientModule {}

@@ -1,12 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
-@Pipe({
-  name: 'mode'
-})
+ 
+@Pipe({ name: 'modePipe' })
 export class ModePipe implements PipeTransform {
-
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  transform(mode: string): string {
+    return mode === 'Online' ? '🖥️ Online (Teleconsultation)' : '🏥 Offline (In-Clinic)';
   }
-
 }
+
