@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth.guard';
-import { roleGuard } from './core/guards/role.guard';
+import { AuthGuard } from './core/guards/auth.guard';
+import { RoleGuard } from './core/guards/role.guard';
+
 
  
 const routes: Routes = [
@@ -12,19 +13,19 @@ const routes: Routes = [
   },
   {
     path: 'patient',
-    canActivate: [authGuard, roleGuard],
+    canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['Patient'] },
     loadChildren: () => import('./modules/patient/patient.module').then(m => m.PatientModule)
   },
   {
     path: 'doctor',
-    canActivate: [authGuard, roleGuard],
+    canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['Doctor'] },
     loadChildren: () => import('./modules/doctor/doctor.module').then(m => m.DoctorModule)
   },
   {
     path: 'admin',
-    canActivate: [authGuard, roleGuard],
+    canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['Admin'] },
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
   },

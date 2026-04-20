@@ -1,1 +1,34 @@
-<p>analytics works!</p>
+<div class="page-container">
+  <div class="page-header">
+    <h1>Revenue Analytics</h1>
+  </div>
+  <div class="filter-bar">
+    <div class="form-group">
+      <label>From</label>
+      <input type="date" [(ngModel)]="from" class="form-input" />
+    </div>
+    <div class="form-group">
+      <label>To</label>
+      <input type="date" [(ngModel)]="to" class="form-input" />
+    </div>
+    <button class="btn-load" (click)="loadAnalytics()">Load Analytics</button>
+  </div>
+  <div class="loading" *ngIf="loading">Loading analytics...</div>
+  <div class="analytics-grid" *ngIf="analytics && !loading">
+    <div class="summary-card blue">
+      <div class="val">{{ analytics.totalAppointments }}</div>
+      <div class="lbl">Total Appointments</div>
+    </div>
+    <div class="summary-card green">
+      <div class="val">₹{{ analytics.totalRevenue | number }}</div>
+      <div class="lbl">Total Revenue</div>
+    </div>
+    <div class="top-doctors" *ngIf="analytics.topDoctors">
+      <h3>Top Doctors by Appointments</h3>
+      <div class="doctor-row" *ngFor="let d of analytics.topDoctors | keyvalue">
+        <span class="doc-name">Dr. {{ d.key }}</span>
+        <span class="doc-count">{{ d.value }} appointments</span>
+      </div>
+    </div>
+  </div>
+</div>

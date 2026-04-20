@@ -16,6 +16,10 @@ export class BookAppointmentComponent implements OnInit {
   selectedSpecialty = 0;
   selectedDoctor = 0;
   selectedSlot = 0;
+  notes = '';
+  error = '';
+  loading = false;
+  success = false;
 
   constructor(private doctorSvc: DoctorService,
               private apptSvc: AppointmentService,
@@ -32,16 +36,29 @@ export class BookAppointmentComponent implements OnInit {
     }
   }
 
-  onDoctorSelect() {
+  onDoctorSelect(doctorId: number) {
+    this.selectedDoctor = doctorId;
     this.doctorSvc.getAvailableSlots(this.selectedDoctor)
       .subscribe((s: any) => this.slots = s);
   }
 
   confirmBooking() {
+    this.loading = true;
+    this.error = '';
     this.apptSvc.bookAppointment({
       doctorId: this.selectedDoctor,
-      timeSlotId: this.selectedSlot
-    }).subscribe(() => this.router.navigate(['/patient/appointments']));
+      timeSlotId: this.selectedSlot,
+      notes: this.notes
+    }).subscribe({
+      next: () => {
+        this.loading = false;
+        this.success = true;
+      },
+      error: (err: any) => {
+        this.loading = false;
+        this.error = err.error?.message || 'Booking failed';
+      }
+    });
   }
 }
 

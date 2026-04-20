@@ -12,7 +12,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
         if (err.status === 401) {
-         // this.auth.logout();
+         this.auth.logout();
           this.router.navigate(['/auth/login']);
         }
         const msg = err.error?.message || err.message || 'An error occurred';
