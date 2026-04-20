@@ -1,0 +1,38 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Manage Schedule</h1>
+    <p>Add availability slots for patient bookings</p>
+  </div>
+ 
+  <div class="add-slot-card">
+    <h3>Add New Slot</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Start Time</label>
+        <input type="datetime-local" [(ngModel)]="newSlot.startTime" class="form-input" />
+      </div>
+      <div class="form-group">
+        <label>End Time</label>
+        <input type="datetime-local" [(ngModel)]="newSlot.endTime" class="form-input" />
+      </div>
+    </div>
+    <div class="success-msg" *ngIf="message">{{ message }}</div>
+    <button class="btn-add" (click)="addSlot()" [disabled]="loading">
+      {{ loading ? 'Adding...' : '+ Add Slot' }}
+    </button>
+  </div>
+ 
+  <div class="slots-section">
+    <h3>Your Available Slots</h3>
+    <div class="slots-list" *ngIf="slots.length > 0">
+      <div class="slot-row" *ngFor="let s of slots">
+        <span>{{ s.startTime | date:'MMM d, y HH:mm' }}</span>
+        <span>→</span>
+        <span>{{ s.endTime | date:'HH:mm' }}</span>
+        <span class="booked-tag" *ngIf="s.isBooked">Booked</span>
+      </div>
+    </div>
+    <p *ngIf="slots.length === 0" class="empty">No slots added yet.</p>
+  </div>
+</div>
+

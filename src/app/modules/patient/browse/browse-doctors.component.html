@@ -1,0 +1,51 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Find a Doctor</h1>
+    <p>Browse specialties and filter by consultation mode</p>
+  </div>
+ 
+  <div class="filter-bar">
+    <div class="filter-group">
+      <label>Consultation Mode</label>
+      <select [(ngModel)]="selectedMode" class="form-select">
+        <option value="">All Modes</option>
+        <option value="Online">Online (Teleconsultation)</option>
+        <option value="Offline">Offline (In-Clinic)</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Specialty</label>
+      <select [(ngModel)]="selectedSpecialty" class="form-select">
+        <option [value]="0">All Specialties</option>
+        <option *ngFor="let s of specialties" [value]="s.id">{{ s.name }}</option>
+      </select>
+    </div>
+    <button class="btn-filter" (click)="onFilter()">Search Doctors</button>
+  </div>
+ 
+  <div class="loading" *ngIf="loading">Loading doctors...</div>
+ 
+  <div class="doctors-grid" *ngIf="!loading && doctors.length > 0">
+    <div class="doctor-card" *ngFor="let d of doctors">
+      <div class="doctor-avatar">{{ d.fullName[0] }}</div>
+      <div class="doctor-info">
+        <h3>Dr. {{ d.fullName }}</h3>
+        <p class="specialty">{{ d.specialtyName }}</p>
+        <p class="qualification">{{ d.qualification }}</p>
+        <div class="doctor-meta">
+          <span class="badge" [class.online]="d.mode === 'Online'" [class.offline]="d.mode === 'Offline'">
+            {{ d.mode }}
+          </span>
+          <span class="exp">{{ d.experienceYears }} yrs exp</span>
+          <span class="fee">₹{{ d.consultationFee }}</span>
+        </div>
+        <div class="slots-info">{{ d.availableSlots?.length || 0 }} slots available</div>
+      </div>
+      <button class="btn-book" (click)="bookDoctor(d.id)">Book Now</button>
+    </div>
+  </div>
+ 
+  <div class="empty-state" *ngIf="!loading && doctors.length === 0">
+    <p>No doctors found. Try adjusting your filters.</p>
+  </div>
+</div>

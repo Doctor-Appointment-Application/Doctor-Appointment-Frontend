@@ -1,0 +1,20 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Patient Appointments</h1>
+  </div>
+  <div class="loading" *ngIf="loading">Loading...</div>
+  <div class="appointments-list" *ngIf="!loading">
+    <div class="appt-card" *ngFor="let a of appointments">
+      <div class="appt-info">
+        <h3>{{ a.patientName }}</h3>
+        <p>{{ a.startTime | date:'MMM d, y HH:mm' }} — {{ a.mode }}</p>
+        <span class="badge status-{{ a.status.toLowerCase() }}">{{ a.status }}</span>
+      </div>
+      <div class="appt-actions" *ngIf="a.status === 'Confirmed'">
+        <button class="btn-complete" (click)="updateStatus(a.id, 'Completed')">✓ Complete</button>
+        <button class="btn-noshow" (click)="updateStatus(a.id, 'NoShow')">✗ No Show</button>
+      </div>
+    </div>
+  </div>
+</div>
+

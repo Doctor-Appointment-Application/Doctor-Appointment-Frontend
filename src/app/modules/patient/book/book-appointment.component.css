@@ -1,0 +1,45 @@
+.page-container { max-width: 800px; margin: 0 auto; padding: 24px; }
+.page-header h1 { color: #1F4E79; font-size: 24px; font-weight: 700; margin: 0 0 20px; }
+.booking-card {
+  background: #fff; border-radius: 12px; padding: 32px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+.step h3 { color: #1F4E79; font-size: 16px; font-weight: 600; margin: 0 0 16px; }
+.form-row { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 200px; }
+.form-group label { font-size: 13px; font-weight: 600; color: #333; }
+.form-select, .form-textarea {
+  padding: 10px 14px; border: 1.5px solid #ddd; border-radius: 8px;
+  font-size: 14px; outline: none; font-family: inherit;
+}
+.form-select:focus, .form-textarea:focus { border-color: #2E75B6; }
+.doctors-list { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+.doctor-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 18px; border: 1.5px solid #e0e0e0; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.doctor-item:hover { border-color: #2E75B6; background: #f0f7ff; }
+.doc-name { font-weight: 600; color: #1F4E79; }
+.doc-fee { color: #2E75B6; font-weight: 700; }
+.doc-slots { color: #888; font-size: 13px; }
+.slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.slot-item {
+  border: 1.5px solid #ddd; border-radius: 8px; padding: 12px;
+  text-align: center; cursor: pointer; transition: all 0.2s;
+}
+.slot-item:hover { border-color: #2E75B6; background: #f0f7ff; }
+.slot-item.selected { border-color: #1F4E79; background: #1F4E79; color: #fff; }
+.slot-time { font-size: 18px; font-weight: 700; }
+.slot-date { font-size: 11px; margin-top: 2px; opacity: 0.8; }
+.btn-primary {
+  margin-top: 16px; padding: 13px 32px; background: #1F4E79;
+  color: #fff; border: none; border-radius: 8px; font-size: 15px;
+  font-weight: 600; cursor: pointer; transition: background 0.2s;
+}
+.btn-primary:hover:not(:disabled) { background: #2E75B6; }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+.alert-danger { background: #f8d7da; color: #721c24; padding: 10px 14px; border-radius: 6px; margin-bottom: 10px; font-size: 13px; }
+.success-box { text-align: center; padding: 30px; }
+.success-box h3 { color: #1a7a4a; font-size: 20px; margin-bottom: 10px; }
+.success-box a { color: #2E75B6; }
